@@ -1,1 +1,1 @@
-# react-pizza-git
+# react-pizza
