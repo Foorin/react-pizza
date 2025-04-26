@@ -1,0 +1,52 @@
+[
+  {
+    "id": 0,
+    "imageURL": "https://img.freepik.com/free-photo/close-up-view-pizza-wooden-table_23-2148643426.jpg?t=st=1742767814~exp=1742771414~hmac=306f72d38674d10272b997f2eeb9f095afc980d9ece356a55ff5acd741a54b7d&w=1060",
+    "title": "Пепперони Фреш с перцем",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "price": 803,
+    "category": 0,
+    "rating": 4
+  },
+  {
+    "id": 1,
+    "imageURL": "https://img.freepik.com/free-photo/flat-lay-slices-salami-pizza_23-2148765312.jpg?t=st=1742767848~exp=1742771448~hmac=0d403fde61654a37e6a4b8e9e1ae4ea8a3b57c40f1c0c3497706ed1ba3c0c3df&w=1060",
+    "title": "Сырная",
+    "types": [0],
+    "sizes": [26, 40],
+    "price": 345,
+    "category": 1,
+    "rating": 6
+  },
+  {
+    "id": 2,
+    "imageURL": "https://img.freepik.com/free-photo/delicious-pizza-served-wooden-table_23-2147926042.jpg?t=st=1742767862~exp=1742771462~hmac=e12f9ad905e76ccd88fc553626cbd3f524e58c355155a8124ec59a7b69d60561&w=1060",
+    "title": "Цыплёнок барбекю",
+    "types": [1],
+    "sizes": [26, 40],
+    "price": 295,
+    "category": 1,
+    "rating": 4
+  },
+  {
+    "id": 3,
+    "imageURL": "https://img.freepik.com/free-photo/flat-lay-delicious-pizza-concept-wooden-table_23-2148643446.jpg?t=st=1742767875~exp=1742771475~hmac=30d3e8e34b40052e9fe92987d934ea06f46460f5feba47fed5d2c9c2b7b0805c&w=1060",
+    "title": "Кисло-сладкий цыплёнок",
+    "types": [0, 1],
+    "sizes": [30, 40],
+    "price": 803,
+    "category": 0,
+    "rating": 4
+  },
+  {
+    "id": 4,
+    "imageURL": "https://img.freepik.com/free-photo/side-view-closed-pizza-with-checkered-rag-round-board_176474-3046.jpg?t=st=1743113992~exp=1743117592~hmac=242978d6f5c1efa81798783233691ce28a0ef0d10a532f6810d9ddcaaac72e84&w=1060",
+    "title": "Закрытая",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "price": 650,
+    "category": 0,
+    "rating": 4
+  }
+]

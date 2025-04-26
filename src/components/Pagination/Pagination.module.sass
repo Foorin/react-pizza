@@ -1,0 +1,24 @@
+.root
+  :global
+    display: flex
+    gap: 10px
+    padding-left: 50px
+    li
+      display: inline-flex
+      &.selected
+        a
+          background-color: #fe5f1e
+          color: #fff
+    a
+      width: 40px
+      height: 40px
+      text-align: center
+      line-height: 40px
+      border: 1px solid #fe5f1e
+      border-radius: 30px
+      cursor: pointer
+      color: #fe5f1e
+      
+      &:hover
+        background-color: #fe5f1e
+        color: #fff
