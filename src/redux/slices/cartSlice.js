@@ -4,8 +4,6 @@ const initialState = {
   totalPrice: 0,
   totalCount: 0,
   pizzas: [],
-  selectedTypes: {},
-  selectedSizes: {}, //{ "1": 0, "2": 1 } – где ключ это ID пиццы, значение – выбранный размер
 };
 
 const cartSlice = createSlice({

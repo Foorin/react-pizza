@@ -6,13 +6,6 @@ import { addOnePizzas, removeOnePizzas, deletePizzas } from '../../redux/slices/
 
 function CartPizzaBlock({ id, title, price, count, imageURL, type, size }) {
   const dispatch = useDispatch();
-  // const typePizza = ['тонкое', 'традиционное'];
-
-  // const selectedSizes = useSelector((state) => state.cart.selectedSizes);
-  // const activeSize = selectedSizes[id] || 0;
-
-  // const selectedTypes = useSelector((state) => state.cart.selectedTypes);
-  // const activeType = selectedTypes[id] || 0;
 
   const onClickAddPizza = () => {
     console.log('plus click');

@@ -2,24 +2,15 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { OrangePlusIcon } from '../../constants/icons';
-import { addOnePizzas, setSelectedSize, setSelectedType } from '../../redux/slices/cartSlice';
+import { addOnePizzas } from '../../redux/slices/cartSlice';
 
 function PizzaBlock({ id, title, price, imageURL, sizes, types }) {
   const dispatch = useDispatch();
-  // const [acitveType, setActiveType] = React.useState(0);
-  const selectedTypes = useSelector((state) => state.cart.selectedTypes);
-  const activeType = selectedTypes[id] || 0;
-  const onTypeClick = (index) => {
-    dispatch(setSelectedType({ pizzaId: id, typeIndex: index }));
-  };
+
+  const [activeType, setActiveType] = React.useState(0);
   const typePizza = ['тонкое', 'традиционное'];
 
-  // const [activeSize, setActiveSize] = React.useState(0);
-  const selectedSizes = useSelector((state) => state.cart.selectedSizes);
-  const activeSize = selectedSizes[id] || 0;
-  const onSizeClick = (index) => {
-    dispatch(setSelectedSize({ pizzaId: id, sizeIndex: index }));
-  };
+  const [activeSize, setActiveSize] = React.useState(0);
 
   const cartPizza = useSelector((state) => state.cart.pizzas.find((pizza) => pizza.id === id));
   const addedCountPizza = cartPizza ? cartPizza.count : 0;
@@ -45,7 +36,7 @@ function PizzaBlock({ id, title, price, imageURL, sizes, types }) {
           {types.map((type) => (
             <li
               key={type}
-              onClick={() => onTypeClick(type)}
+              onClick={() => setActiveType(type)}
               className={activeType === type ? 'active' : ''}>
               {typePizza[type]}
             </li>
@@ -55,7 +46,7 @@ function PizzaBlock({ id, title, price, imageURL, sizes, types }) {
           {sizes.map((size, index) => (
             <li
               key={index}
-              onClick={() => onSizeClick(index)}
+              onClick={() => setActiveSize(index)}
               className={activeSize === index ? 'active' : ''}>
               {size} см.
             </li>
