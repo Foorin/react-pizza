@@ -10,7 +10,7 @@ function Pagination({ currentPage, onChangePage }) {
       breakLabel="..."
       nextLabel=">"
       previousLabel="<"
-      onPageChange={(event) => onChangePage(event.selected + 1)}
+      onPageChange={(event) => onChangePage(event.selected)}
       pageRangeDisplayed={1}
       pageCount={4}
       forcePage={currentPage - 1}

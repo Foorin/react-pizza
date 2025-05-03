@@ -3,7 +3,6 @@ import debounce from 'lodash.debounce';
 
 import styles from './Search.module.sass';
 import { SearchContext } from '../../App';
-import { GreyCloseIcon } from '../../constants/icons';
 
 function Search() {
   const [searchValueLocal, setSearchValueLocal] = useState('');
@@ -38,12 +37,16 @@ function Search() {
         placeholder="Поиск пиццы"
       />
       {searchValueLocal && (
-        <GreyCloseIcon
+        <svg
           className={styles.clearIcon}
-          onClick={() => {
-            onClickClear();
-          }}
-        />
+          onClick={onClickClear}
+          height="48"
+          viewBox="0 0 48 48"
+          width="48"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M38 12.83l-2.83-2.83-11.17 11.17-11.17-11.17-2.83 2.83 11.17 11.17-11.17 11.17 2.83 2.83 11.17-11.17 11.17 11.17 2.83-2.83-11.17-11.17z" />
+          <path d="M0 0h48v48h-48z" fill="none" />
+        </svg>
       )}
     </div>
   );

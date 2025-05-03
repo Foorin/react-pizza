@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setSortType } from '../redux/slices/filterSlice';
-import { BlackUpArrowIcon } from '../constants/icons';
+import { setSortType } from '../../redux/slices/filterSlice';
+import { BlackUpArrowIcon } from '../../constants/icons';
 
 function Sort() {
   const dispatch = useDispatch();
@@ -22,19 +22,23 @@ function Sort() {
   };
 
   useEffect(() => {
-    document.body.addEventListener('click', (event) => {
-      if (sortRef.current.contains(event.target)) {
-        console.log('был клик на сорт');
-        // setOpen(false);
+    const noSortClick = (event) => {
+      if (!sortRef.current.contains(event.target)) {
+        // console.log('был клик не на сорт');
+        setOpen(false);
       }
-    });
+    };
+
+    document.body.addEventListener('click', noSortClick);
+
+    return () => document.body.removeEventListener('click', noSortClick);
   }, []);
   return (
     <div ref={sortRef} className="sort">
       <div className="sort__label">
         <BlackUpArrowIcon />
         <b>Сортировка по:</b>
-        <span 
+        <span
           onClick={() => {
             setOpen(!open);
           }}>

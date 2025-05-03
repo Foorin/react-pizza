@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 import { setFilterId, setCurrentPage } from '../redux/slices/filterSlice';
-import Categories from '../components/Categories';
-import Sort from '../components/Sort';
+import Categories from '../components/Categories/Categories';
+import Sort from '../components/Sort/Sort';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
 import PizzaSkeleton from '../components/PizzaBlock/PizzaSkeleton';
 import Pagination from '../components/Pagination/Pagination';
@@ -21,8 +21,8 @@ function Home() {
   const onChangeFilter = (id) => {
     dispatch(setFilterId(id));
   };
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (pageNumber) => {
+    dispatch(setCurrentPage(pageNumber));
   };
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,6 +30,8 @@ function Home() {
   const { searchValue } = React.useContext(SearchContext);
 
   useEffect(() => {
+    // const controller = new AbortController();
+    // const { signal } = controller;
     setIsLoading(true);
     const category = filterId > 0 ? `category=${filterId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';

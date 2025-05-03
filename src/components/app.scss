@@ -1,8 +1,7 @@
-// @import '../../public/fonts/';
-@import 'variables';
-@import 'libs/normalize';
+@import './normalize';
+@import './variables';
 
-@import 'components/all';
+@import './all';
 
 body {
   background-color: $background;
@@ -82,7 +81,7 @@ body {
     justify-content: space-between;
     align-items: center;
   }
-  .content__items{
+  .content__items {
     display: block;
   }
   .content__title {
@@ -302,12 +301,13 @@ body {
   }
 
   &--empty {
-    margin: 0 auto;
+    margin: 60px auto;
     width: 560px;
     text-align: center;
 
     h2 {
-      font-size: 32px;
+      font-size: 36px;
+      font-weight: 600px;
       margin-bottom: 10px;
     }
 

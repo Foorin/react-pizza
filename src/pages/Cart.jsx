@@ -1,167 +1,59 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  BlackCartIcon,
-  GreyBackIcon,
-  GreyDeleteIcon,
-  GreyTrashIcon,
-  OrangeMinusIcon,
-  OrangePlusIcon,
-} from '../constants/icons';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { BlackCartIcon, GreyBackIcon, GreyTrashIcon } from '../constants/icons';
+import CartPizzaBlock from '../components/CartPizzaBlock/CartPizzaBlock';
+import { clearPizzas } from '../redux/slices/cartSlice';
+import CartEmpty from '../components/CartEmpty/CartEmpty';
 
 function Cart() {
+  const dispatch = useDispatch();
+  const { totalPrice, totalCount } = useSelector((state) => state.cart);
+  const cartPizzas = useSelector((state) => state.cart.pizzas);
+
+  const onClickClear = () => {
+    if (window.confirm('Очистить корзину?')) {
+      dispatch(clearPizzas());
+    }
+  };
+
+  if (totalPrice === 0) return <CartEmpty />;
   return (
     <div className="container container--cart">
-      <div class="cart">
-        <div class="cart__top">
-          <h2 class="content__title">
+      <div className="cart">
+        <div className="cart__top">
+          <h2 className="content__title">
             <BlackCartIcon />
             Корзина
           </h2>
-          <div class="cart__clear">
+          <div className="cart__clear" onClick={onClickClear}>
             <GreyTrashIcon />
             <span>Очистить корзину</span>
           </div>
         </div>
-        <div class="content__items">
-          <div class="cart__item">
-            <div class="cart__item-img">
-              <img
-                class="pizza-block__image"
-                src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-                alt="Pizza"
-              />
-            </div>
-            <div class="cart__item-info">
-              <h3>Сырный цыпленок</h3>
-              <p>тонкое тесто, 26 см.</p>
-            </div>
-            <div class="cart__item-count">
-              <div class="button button--outline button--circle cart__item-count-minus">
-                <OrangeMinusIcon />
-              </div>
-              <b>2</b>
-              <div class="button button--outline button--circle cart__item-count-plus">
-                <OrangePlusIcon />
-              </div>
-            </div>
-            <div class="cart__item-price">
-              <b>770 ₽</b>
-            </div>
-            <div class="cart__item-remove">
-              <div class="button button--outline button--circle">
-                <GreyDeleteIcon />
-              </div>
-            </div>
-          </div>
-          <div class="cart__item">
-            <div class="cart__item-img">
-              <img
-                class="pizza-block__image"
-                src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-                alt="Pizza"
-              />
-            </div>
-            <div class="cart__item-info">
-              <h3>Сырный цыпленок</h3>
-              <p>тонкое тесто, 26 см.</p>
-            </div>
-            <div class="cart__item-count">
-              <div class="button button--outline button--circle cart__item-count-minus">
-                <OrangeMinusIcon />
-              </div>
-              <b>2</b>
-              <div class="button button--outline button--circle cart__item-count-plus">
-                <OrangePlusIcon />
-              </div>
-            </div>
-            <div class="cart__item-price">
-              <b>770 ₽</b>
-            </div>
-            <div class="cart__item-remove">
-              <div class="button button--outline button--circle">
-                <GreyDeleteIcon />
-              </div>
-            </div>
-          </div>
-          <div class="cart__item">
-            <div class="cart__item-img">
-              <img
-                class="pizza-block__image"
-                src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-                alt="Pizza"
-              />
-            </div>
-            <div class="cart__item-info">
-              <h3>Сырный цыпленок</h3>
-              <p>тонкое тесто, 26 см.</p>
-            </div>
-            <div class="cart__item-count">
-              <div class="button button--outline button--circle cart__item-count-minus">
-                <OrangeMinusIcon />
-              </div>
-              <b>2</b>
-              <div class="button button--outline button--circle cart__item-count-plus">
-                <OrangePlusIcon />
-              </div>
-            </div>
-            <div class="cart__item-price">
-              <b>770 ₽</b>
-            </div>
-            <div class="cart__item-remove">
-              <div class="button button--outline button--circle">
-                <GreyDeleteIcon />
-              </div>
-            </div>
-          </div>
-          <div class="cart__item">
-            <div class="cart__item-img">
-              <img
-                class="pizza-block__image"
-                src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-                alt="Pizza"
-              />
-            </div>
-            <div class="cart__item-info">
-              <h3>Сырный цыпленок</h3>
-              <p>тонкое тесто, 26 см.</p>
-            </div>
-            <div class="cart__item-count">
-              <div class="button button--outline button--circle cart__item-count-minus">
-                <OrangeMinusIcon />
-              </div>
-              <b>2</b>
-              <div class="button button--outline button--circle cart__item-count-plus">
-                <OrangePlusIcon />
-              </div>
-            </div>
-            <div class="cart__item-price">
-              <b>770 ₽</b>
-            </div>
-            <div class="cart__item-remove">
-              <div class="button button--outline button--circle">
-                <GreyDeleteIcon />
-              </div>
-            </div>
-          </div>
+        <div className="content__items">
+          {cartPizzas.map((pizza) => (
+            <CartPizzaBlock key={`${pizza.id}-${pizza.type}-${pizza.size}`} {...pizza} />
+          ))}
         </div>
-        <div class="cart__bottom">
-          <div class="cart__bottom-details">
+        <div className="cart__bottom">
+          <div className="cart__bottom-details">
             <span>
               {' '}
-              Всего пицц: <b>3 шт.</b>{' '}
+              Всего пицц: <b>{totalCount} шт.</b>{' '}
             </span>
             <span>
               {' '}
-              Сумма заказа: <b>900 ₽</b>{' '}
+              Сумма заказа: <b>{totalPrice} ₽</b>{' '}
             </span>
           </div>
-          <div class="cart__bottom-buttons">
-            <Link to="/" class="button button--outline button--add go-back-btn">
+          <div className="cart__bottom-buttons">
+            <Link to="/" className="button button--outline button--add go-back-btn">
               <GreyBackIcon />
               <span>Вернуться назад</span>
             </Link>
-            <div class="button pay-btn">
+            <div className="button pay-btn">
               <span>Оплатить сейчас</span>
             </div>
           </div>
