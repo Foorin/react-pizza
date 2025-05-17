@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { OrangePlusIcon } from '../../constants/icons';
+import { OrangePlusIcon } from '../../assets/icons';
 import { addOnePizzas } from '../../redux/slices/cartSlice';
 
 function PizzaBlock({ id, title, price, imageURL, sizes, types }) {

@@ -2,7 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setSortType } from '../../redux/slices/filterSlice';
-import { BlackUpArrowIcon } from '../../constants/icons';
+import { BlackUpArrowIcon } from '../../assets/icons';
+
+export const sortList = [
+  { name: 'популярности', sortProperty: 'rating' },
+  { name: 'цене', sortProperty: 'price' },
+  { name: 'алфавиту', sortProperty: 'title' },
+];
 
 function Sort() {
   const dispatch = useDispatch();
@@ -10,11 +16,6 @@ function Sort() {
   const sortRef = useRef();
 
   const [open, setOpen] = React.useState(false);
-  const sortList = [
-    { name: 'популярности', sortProperty: 'rating' },
-    { name: 'цене', sortProperty: 'price' },
-    { name: 'алфавиту', sortProperty: 'title' },
-  ];
 
   const onClickSelectedItem = (obj) => {
     dispatch(setSortType(obj));

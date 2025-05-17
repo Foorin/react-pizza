@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import logoPizza from '../../assets/img/pizza-logo.svg';
 import Search from '../Search/Search';
-import { WhiteCartIcon } from '../../constants/icons';
+import { WhiteCartIcon } from '../../assets/icons';
 
 function Header() {
   const { totalPrice, totalCount } = useSelector((state) => state.cart);

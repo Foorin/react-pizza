@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { BlackCartIcon, GreyBackIcon, GreyTrashIcon } from '../constants/icons';
+import { BlackCartIcon, GreyBackIcon, GreyTrashIcon } from '../assets/icons';
 import CartPizzaBlock from '../components/CartPizzaBlock/CartPizzaBlock';
 import { clearPizzas } from '../redux/slices/cartSlice';
 import CartEmpty from '../components/CartEmpty/CartEmpty';
