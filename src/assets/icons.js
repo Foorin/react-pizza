@@ -5,7 +5,6 @@ export const OrangePlusIcon = () => (
       fill="white"></path>
   </svg>
 );
-
 export const OrangeMinusIcon = () => (
   <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
@@ -48,7 +47,6 @@ export const WhiteCartIcon = () => (
       strokeLinejoin="round"></path>
   </svg>
 );
-
 export const BlackCartIcon = () => (
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path

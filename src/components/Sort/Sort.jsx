@@ -31,9 +31,9 @@ function Sort() {
     };
 
     document.body.addEventListener('click', noSortClick);
-
     return () => document.body.removeEventListener('click', noSortClick);
   }, []);
+
   return (
     <div ref={sortRef} className="sort">
       <div className="sort__label">

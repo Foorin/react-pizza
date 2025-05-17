@@ -64,4 +64,5 @@ function PizzaBlock({ id, title, price, imageURL, sizes, types }) {
     </div>
   );
 }
+
 export default PizzaBlock;

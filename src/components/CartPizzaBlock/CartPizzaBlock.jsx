@@ -71,5 +71,4 @@ function CartPizzaBlock({ id, title, price, count, imageURL, type, size }) {
     </div>
   );
 }
-
 export default CartPizzaBlock;
