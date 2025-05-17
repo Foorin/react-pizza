@@ -54,7 +54,7 @@ function Home() {
       });
   };
 
-  // если изменили параметры и был первый рендер, то делаем эту проверку
+  // если изменили параметры и был первый рендер, то в url ставим параметры из редакса и ставим метку, что компонент единожды был вмонтирован
   useEffect(() => {
     if (isMounted.current) {
       const stringToBack = qs.stringify({
@@ -67,7 +67,7 @@ function Home() {
     isMounted.current = true;
   }, [filterId, sortType.sortProperty, currentPage]);
 
-  // если был первый рендер, то проверяем url-параметры и сохраняем их в редаксе
+  // при первом рендере проверяем url-параметры и сохраняем их в редаксе
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
