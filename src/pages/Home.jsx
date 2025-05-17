@@ -40,18 +40,23 @@ function Home() {
 
   const { searchValue } = React.useContext(SearchContext);
 
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setIsLoading(true);
-    const category = filterId > 0 ? `filter=${filterId}` : '';
+
+    const category = filterId > 0 ? `category=${filterId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
-    axios
-      .get(
+
+    try {
+      const res = await axios.get(
         `https://67e5ce1418194932a5874a0d.mockapi.io/pizzasItems?page=${currentPage}&${category}${search}&sortBy=${sortType.sortProperty}&order=asc`,
-      )
-      .then((res) => {
-        setPizzas(res.data);
-        setIsLoading(false);
-      });
+      );
+      console.log(category);
+      setPizzas(res.data);
+    } catch (error) {
+      console.log('ошибка какая-то', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // если изменили параметры и был первый рендер, то в url ставим параметры из редакса и ставим метку, что компонент единожды был вмонтирован
@@ -71,7 +76,7 @@ function Home() {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      console.log(params);
+      // console.log(params);
       const sortType = sortList.find((property) => property.sortProperty === params.sortProperty);
       dispatch(
         setBackString({
