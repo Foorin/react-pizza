@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,6 +10,7 @@ import {
   setBackString,
   setSortType,
 } from '../redux/slices/filterSlice';
+import { fetchPizzas } from '../redux/slices/pizzaSlice';
 import Categories from '../components/Categories/Categories';
 import Sort, { sortList } from '../components/Sort/Sort';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
@@ -25,6 +25,7 @@ function Home() {
   const sortType = useSelector((state) => state.filter.sortType);
   const filterId = useSelector((state) => state.filter.filterId);
   const currentPage = useSelector((state) => state.filter.currentPage);
+  const { pizzas, status } = useSelector((state) => state.pizza);
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -35,28 +36,17 @@ function Home() {
   const onChangePage = (pageNumber) => {
     dispatch(setCurrentPage(pageNumber));
   };
-  const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const { searchValue } = React.useContext(SearchContext);
 
-  const fetchPizzas = async () => {
+  const loadingPizzas = async () => {
     setIsLoading(true);
 
     const category = filterId > 0 ? `category=${filterId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    try {
-      const res = await axios.get(
-        `https://67e5ce1418194932a5874a0d.mockapi.io/pizzasItems?page=${currentPage}&${category}${search}&sortBy=${sortType.sortProperty}&order=asc`,
-      );
-      console.log(category);
-      setPizzas(res.data);
-    } catch (error) {
-      console.log('ошибка какая-то', error);
-    } finally {
-      setIsLoading(false);
-    }
+    dispatch(fetchPizzas({ category, search, currentPage, sortType }));
   };
 
   // если изменили параметры и был первый рендер, то в url ставим параметры из редакса и ставим метку, что компонент единожды был вмонтирован
@@ -76,7 +66,6 @@ function Home() {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      // console.log(params);
       const sortType = sortList.find((property) => property.sortProperty === params.sortProperty);
       dispatch(
         setBackString({
@@ -88,11 +77,11 @@ function Home() {
     }
   }, []);
 
-  // если был первый рендер,то запрашиваем пиццы
+  // парсим параметры при первом рендере
   useEffect(() => {
     window.scrollTo(0, 0);
     if (!isSearch.current) {
-      fetchPizzas();
+      loadingPizzas();
     }
     isSearch.current = false;
   }, [filterId, sortType.sortProperty, searchValue, currentPage]);
@@ -107,9 +96,18 @@ function Home() {
           <Sort value={sortType} onClickSort={(sort) => dispatch(setSortType(sort))} />
         </div>
         <h2 className="content__title">Все пиццы</h2>
-        <div className="content__items">
-          {isLoading ? skeletons : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
-        </div>
+        {status === 'error' ? (
+          <div className='content__error-info'>
+            <h2>Произошла ошибка</h2>
+            <p>К сожалению, не удалось получить пиццы. Попробуйте позже</p>
+          </div>
+        ) : (
+          <div className="content__items">
+            {status === 'loading'
+              ? skeletons
+              : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+          </div>
+        )}
       </div>
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </>
