@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { OrangePlusIcon } from '../../assets/icons';
 import { addOnePizzas } from '../../redux/slices/cartSlice';
+import { selectCartPizzaById } from '../../redux/slices/cartSlice';
 
 function PizzaBlock({ id, title, price, imageURL, sizes, types }) {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ function PizzaBlock({ id, title, price, imageURL, sizes, types }) {
 
   const [activeSize, setActiveSize] = React.useState(0);
 
-  const cartPizza = useSelector((state) => state.cart.pizzas.find((pizza) => pizza.id === id));
+  const cartPizza = useSelector(selectCartPizzaById(id));
   const addedCountPizza = cartPizza ? cartPizza.count : 0;
 
   const onClickAddPizza = () => {

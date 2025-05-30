@@ -91,6 +91,8 @@ const cartSlice = createSlice({
   },
 });
 
+export const selectCartPizzaById = (id) =>  (state) => state.cart.pizzas.find((pizza) => pizza.id === id);
+export const selectCart = (state) => state.cart;
 export const {
   addOnePizzas,
   removeOnePizzas,
@@ -99,4 +101,5 @@ export const {
   setSelectedSize,
   setSelectedType,
 } = cartSlice.actions;
+
 export default cartSlice.reducer;

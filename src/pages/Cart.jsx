@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { BlackCartIcon, GreyBackIcon, GreyTrashIcon } from '../assets/icons';
 import CartPizzaBlock from '../components/CartPizzaBlock/CartPizzaBlock';
-import { clearPizzas } from '../redux/slices/cartSlice';
+import { clearPizzas, selectCart } from '../redux/slices/cartSlice';
 import CartEmpty from '../components/CartEmpty/CartEmpty';
 
 function Cart() {
   const dispatch = useDispatch();
-  const { totalPrice, totalCount } = useSelector((state) => state.cart);
+  const { totalPrice, totalCount } = useSelector(selectCart);
   const cartPizzas = useSelector((state) => state.cart.pizzas);
 
   const onClickClear = () => {

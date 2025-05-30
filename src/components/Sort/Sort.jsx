@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setSortType } from '../../redux/slices/filterSlice';
+import { selectSort, setSortType } from '../../redux/slices/filterSlice';
 import { BlackUpArrowIcon } from '../../assets/icons';
 
 export const sortList = [
@@ -12,7 +12,7 @@ export const sortList = [
 
 function Sort() {
   const dispatch = useDispatch();
-  const sortType = useSelector((state) => state.filter.sortType);
+  const sortType = useSelector(selectSort);
   const sortRef = useRef();
 
   const [open, setOpen] = React.useState(false);

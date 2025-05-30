@@ -9,8 +9,9 @@ import {
   setCurrentPage,
   setBackString,
   setSortType,
+  selectFilter,
 } from '../redux/slices/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import { fetchPizzas, selectPizza } from '../redux/slices/pizzaSlice';
 import Categories from '../components/Categories/Categories';
 import Sort, { sortList } from '../components/Sort/Sort';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
@@ -22,10 +23,8 @@ function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const sortType = useSelector((state) => state.filter.sortType);
-  const filterId = useSelector((state) => state.filter.filterId);
-  const currentPage = useSelector((state) => state.filter.currentPage);
-  const { pizzas, status } = useSelector((state) => state.pizza);
+  const { sortType, filterId, currentPage, searchValue } = useSelector(selectFilter);
+  const { pizzas, status } = useSelector(selectPizza);
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -37,8 +36,6 @@ function Home() {
     dispatch(setCurrentPage(pageNumber));
   };
   const [isLoading, setIsLoading] = useState(true);
-
-  const { searchValue } = React.useContext(SearchContext);
 
   const loadingPizzas = async () => {
     setIsLoading(true);
@@ -80,10 +77,10 @@ function Home() {
   // парсим параметры при первом рендере
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (!isSearch.current) {
-      loadingPizzas();
-    }
-    isSearch.current = false;
+    // if (!isSearch.current) {
+    loadingPizzas();
+    // }
+    // isSearch.current = false;
   }, [filterId, sortType.sortProperty, searchValue, currentPage]);
 
   const skeletons = [...new Array(6)].map((_, index) => <PizzaSkeleton key={index} />);
@@ -97,7 +94,7 @@ function Home() {
         </div>
         <h2 className="content__title">Все пиццы</h2>
         {status === 'error' ? (
-          <div className='content__error-info'>
+          <div className="content__error-info">
             <h2>Произошла ошибка</h2>
             <p>К сожалению, не удалось получить пиццы. Попробуйте позже</p>
           </div>
