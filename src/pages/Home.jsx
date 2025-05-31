@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import {
   setFilterId,
@@ -17,7 +17,6 @@ import Sort, { sortList } from '../components/Sort/Sort';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
 import PizzaSkeleton from '../components/PizzaBlock/PizzaSkeleton';
 import Pagination from '../components/Pagination/Pagination';
-import { SearchContext } from '../App';
 
 function Home() {
   const navigate = useNavigate();
@@ -102,7 +101,11 @@ function Home() {
           <div className="content__items">
             {status === 'loading'
               ? skeletons
-              : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+              : pizzas.map((pizza) => (
+                  <Link key={pizza.id} to={`/pizza/${pizza.id}`}>
+                    <PizzaBlock {...pizza} />
+                  </Link>
+                ))}
           </div>
         )}
       </div>
