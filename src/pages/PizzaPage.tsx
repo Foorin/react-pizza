@@ -2,10 +2,14 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-function PizzaPage() {
+const PizzaPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const [pizza, setPizza] = useState();
+  const [pizza, setPizza] = useState<{
+    imageURL: string;
+    title: string;
+    price: number;
+  }>();
   const { pizzaId } = useParams();
 
   useEffect(() => {
@@ -33,6 +37,6 @@ function PizzaPage() {
       <h4>{pizza.price} ₽</h4>
     </div>
   );
-}
+};
 
 export default PizzaPage;

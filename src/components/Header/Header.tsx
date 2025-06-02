@@ -6,8 +6,9 @@ import Search from '../Search/Search';
 import { WhiteCartIcon } from '../../assets/icons';
 import { selectCart } from '../../redux/slices/cartSlice';
 
-function Header() {
+const Header:React.FC = () => {
   const location = useLocation();
+  //@ts-ignore
   const { totalPrice, totalCount } = useSelector(selectCart);
   return (
     <div className="header">
@@ -35,5 +36,5 @@ function Header() {
       </div>
     </div>
   );
-}
+};
 export default Header;

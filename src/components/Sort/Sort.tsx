@@ -1,10 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, MouseEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { selectSort, setSortType } from '../../redux/slices/filterSlice';
 import { BlackUpArrowIcon } from '../../assets/icons';
 
-export const sortList = [
+type SortObj = {
+  name: String;
+  sortProperty: String;
+};
+
+export const sortList: SortObj[] = [
   { name: 'популярности', sortProperty: 'rating' },
   { name: 'цене', sortProperty: 'price' },
   { name: 'алфавиту', sortProperty: 'title' },
@@ -12,20 +17,19 @@ export const sortList = [
 
 function Sort() {
   const dispatch = useDispatch();
-  const sortType = useSelector(selectSort);
-  const sortRef = useRef();
+  const sortType: any = useSelector(selectSort);
+  const sortRef = useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = React.useState(false);
 
-  const onClickSelectedItem = (obj) => {
-    dispatch(setSortType(obj));
+  const onClickSelectedItem = (sortBy: SortObj) => {
+    dispatch(setSortType(sortBy));
     setOpen(false);
   };
 
   useEffect(() => {
-    const noSortClick = (event) => {
-      if (!sortRef.current.contains(event.target)) {
-        // console.log('был клик не на сорт');
+    const noSortClick = (event: Event) => {
+      if (sortRef.current && !sortRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     };

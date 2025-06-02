@@ -18,20 +18,22 @@ import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
 import PizzaSkeleton from '../components/PizzaBlock/PizzaSkeleton';
 import Pagination from '../components/Pagination/Pagination';
 
-function Home() {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  //@ts-ignore
   const { sortType, filterId, currentPage, searchValue } = useSelector(selectFilter);
+
+  //@ts-ignore
   const { pizzas, status } = useSelector(selectPizza);
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const onChangeFilter = (id) => {
+  const onChangeFilter = (id: number) => {
     dispatch(setFilterId(id));
   };
-  const onChangePage = (pageNumber) => {
+  const onChangePage = (pageNumber: number) => {
     dispatch(setCurrentPage(pageNumber));
   };
   const [isLoading, setIsLoading] = useState(true);
@@ -88,8 +90,12 @@ function Home() {
     <>
       <div className="container">
         <div className="content__top">
-          <Categories value={filterId} onClickCategory={(id) => onChangeFilter(id)} />
-          <Sort value={sortType} onClickSort={(sort) => dispatch(setSortType(sort))} />
+          <Categories value={filterId} onClickCategory={onChangeFilter} />
+          <Sort
+            //@ts-ignore
+            value={sortType}
+            onClickSort={(sort) => dispatch(setSortType(sort))}
+          />
         </div>
         <h2 className="content__title">Все пиццы</h2>
         {status === 'error' ? (
@@ -101,7 +107,7 @@ function Home() {
           <div className="content__items">
             {status === 'loading'
               ? skeletons
-              : pizzas.map((pizza) => (
+              : pizzas.map((pizza: any) => (
                   <Link key={pizza.id} to={`/pizza/${pizza.id}`}>
                     <PizzaBlock {...pizza} />
                   </Link>
@@ -112,6 +118,6 @@ function Home() {
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </>
   );
-}
+};
 
 export default Home;

@@ -5,7 +5,16 @@ import { OrangePlusIcon } from '../../assets/icons';
 import { addOnePizzas } from '../../redux/slices/cartSlice';
 import { selectCartPizzaById } from '../../redux/slices/cartSlice';
 
-function PizzaBlock({ id, title, price, imageURL, sizes, types }) {
+type PizzaBlockProps = {
+  id: number;
+  title: string;
+  price: number;
+  imageURL: string;
+  sizes: number[];
+  types: number[];
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageURL, sizes, types }) => {
   const dispatch = useDispatch();
 
   const [activeType, setActiveType] = React.useState(0);
@@ -13,7 +22,7 @@ function PizzaBlock({ id, title, price, imageURL, sizes, types }) {
 
   const [activeSize, setActiveSize] = React.useState(0);
 
-  const cartPizza = useSelector(selectCartPizzaById(id));
+  const cartPizza: any = useSelector(selectCartPizzaById(id));
   const addedCountPizza = cartPizza ? cartPizza.count : 0;
 
   const onClickAddPizza = () => {
@@ -64,6 +73,6 @@ function PizzaBlock({ id, title, price, imageURL, sizes, types }) {
       </div>
     </div>
   );
-}
+};
 
 export default PizzaBlock;

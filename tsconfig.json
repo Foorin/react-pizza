@@ -1,0 +1,7 @@
+{
+  "include": ["src", "src/@types"],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
+  }
+}

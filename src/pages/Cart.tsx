@@ -7,10 +7,15 @@ import CartPizzaBlock from '../components/CartPizzaBlock/CartPizzaBlock';
 import { clearPizzas, selectCart } from '../redux/slices/cartSlice';
 import CartEmpty from '../components/CartEmpty/CartEmpty';
 
-function Cart() {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
+  //@ts-ignore
   const { totalPrice, totalCount } = useSelector(selectCart);
-  const cartPizzas = useSelector((state) => state.cart.pizzas);
+  const cartPizzas = useSelector(
+    (state) =>
+      //@ts-ignore
+      state.cart.pizzas,
+  );
 
   const onClickClear = () => {
     if (window.confirm('Очистить корзину?')) {
@@ -61,6 +66,6 @@ function Cart() {
       </div>
     </div>
   );
-}
+};
 
 export default Cart;
