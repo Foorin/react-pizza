@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { OrangeMinusIcon, OrangePlusIcon, GreyDeleteIcon } from '../../assets/icons';
-import { addOnePizzas, removeOnePizzas, deletePizzas } from '../../redux/slices/cartSlice';
+import { addOnePizza, removeOnePizza, deletePizzas } from '../../redux/slices/cartSlice';
 
 type CartProps = {
   id: string;
@@ -19,11 +19,15 @@ const CartPizzaBlock: React.FC<CartProps> = ({ id, title, price, count, imageURL
 
   const onClickAddPizza = () => {
     const pizza = {
-      id,
+      id, 
+      price,
+      title,
+      count,
+      imageURL, 
       type,
       size,
     };
-    dispatch(addOnePizzas(pizza));
+    dispatch(addOnePizza(pizza));
   };
   const onClickRemovePizza = () => {
     const pizza = {
@@ -31,7 +35,7 @@ const CartPizzaBlock: React.FC<CartProps> = ({ id, title, price, count, imageURL
       type,
       size,
     };
-    dispatch(removeOnePizzas(pizza));
+    dispatch(removeOnePizza(pizza));
   };
 
   const onClickDelete = () => {

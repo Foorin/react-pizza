@@ -6,16 +6,12 @@ import { BlackCartIcon, GreyBackIcon, GreyTrashIcon } from '../assets/icons';
 import CartPizzaBlock from '../components/CartPizzaBlock/CartPizzaBlock';
 import { clearPizzas, selectCart } from '../redux/slices/cartSlice';
 import CartEmpty from '../components/CartEmpty/CartEmpty';
+import { RootState } from '../redux/store';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
-  //@ts-ignore
   const { totalPrice, totalCount } = useSelector(selectCart);
-  const cartPizzas = useSelector(
-    (state) =>
-      //@ts-ignore
-      state.cart.pizzas,
-  );
+  const cartPizzas = useSelector((state:RootState) => state.cart.pizzas);
 
   const onClickClear = () => {
     if (window.confirm('Очистить корзину?')) {

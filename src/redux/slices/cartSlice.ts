@@ -1,6 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
-const initialState = {
+export type CartPizza = {
+  id: string;
+  price: number;
+  title: string;
+  count: number;
+  imageURL: string;
+  type: string;
+  size: number;
+};
+
+type MatchPizza = {
+  id: string;
+  type: string;
+  size: number;
+};
+
+interface CartSliceState {
+  totalPrice: number;
+  totalCount: number;
+  pizzas: CartPizza[];
+}
+
+const initialState: CartSliceState = {
   totalPrice: 0,
   totalCount: 0,
   pizzas: [],
@@ -10,7 +33,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addOnePizzas(state, action) {
+    addOnePizza(state, action: PayloadAction<CartPizza>) {
       const matchPizza = state.pizzas.find(
         (pizza) =>
           pizza.id === action.payload.id &&
@@ -34,17 +57,26 @@ const cartSlice = createSlice({
       }, 0);
     },
 
-    removeOnePizzas(state, action) {
-      const { id, type, size } = action.payload;
-      const pizzaIndex = state.pizzas.findIndex(
-        (pizza) => pizza.id === id && pizza.type === type && pizza.size === size,
+    removeOnePizza(state, action: PayloadAction<MatchPizza>) {
+      const matchPizza = state.pizzas.find(
+        (pizza) =>
+          pizza.id === action.payload.id &&
+          pizza.type === action.payload.type &&
+          pizza.size === action.payload.size,
       );
-      if (pizzaIndex !== -1) {
-        const pizza = state.pizzas[pizzaIndex];
-        if (pizza.count > 1) {
-          pizza.count--;
+
+      if (matchPizza) {
+        if (matchPizza.count > 1) {
+          matchPizza.count--;
         } else {
-          state.pizzas.splice(pizzaIndex, 1);
+          state.pizzas = state.pizzas.filter(
+            (pizza) =>
+              !(
+                pizza.id === action.payload.id &&
+                pizza.type === action.payload.type &&
+                pizza.size === action.payload.size
+              ),
+          );
         }
       }
 
@@ -57,7 +89,7 @@ const cartSlice = createSlice({
       }, 0);
     },
 
-    deletePizzas(state, action) {
+    deletePizzas(state, action: PayloadAction<MatchPizza>) {
       const { id, type, size } = action.payload;
       const pizzaIndex = state.pizzas.findIndex(
         (pizza) => pizza.id === id && pizza.type === type && pizza.size === size,
@@ -80,26 +112,27 @@ const cartSlice = createSlice({
       state.totalCount = 0;
       state.totalPrice = 0;
     },
-    setSelectedSize(state, action) {
-      const { pizzaId, sizeIndex } = action.payload;
-      state.selectedSizes[pizzaId] = sizeIndex;
-    },
-    setSelectedType(state, action) {
-      const { pizzaId, typeIndex } = action.payload;
-      state.selectedTypes[pizzaId] = typeIndex;
-    },
+    // setSelectedSize(state, action) {
+    //   const { pizzaId, sizeIndex } = action.payload;
+    //   state.selectedSizes[pizzaId] = sizeIndex;
+    // },
+    // setSelectedType(state, action) {
+    //   const { pizzaId, typeIndex } = action.payload;
+    //   state.selectedTypes[pizzaId] = typeIndex;
+    // },
   },
 });
 
-export const selectCartPizzaById = (id) =>  (state) => state.cart.pizzas.find((pizza) => pizza.id === id);
-export const selectCart = (state) => state.cart;
+export const selectCartPizzaById = (id: string) => (state: RootState) =>
+  state.cart.pizzas.find((pizza) => pizza.id === id);
+export const selectCart = (state: RootState) => state.cart;
 export const {
-  addOnePizzas,
-  removeOnePizzas,
+  addOnePizza,
+  removeOnePizza,
   clearPizzas,
   deletePizzas,
-  setSelectedSize,
-  setSelectedType,
+  // setSelectedSize,
+  // setSelectedType,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

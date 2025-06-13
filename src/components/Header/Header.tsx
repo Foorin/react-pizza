@@ -8,7 +8,6 @@ import { selectCart } from '../../redux/slices/cartSlice';
 
 const Header:React.FC = () => {
   const location = useLocation();
-  //@ts-ignore
   const { totalPrice, totalCount } = useSelector(selectCart);
   return (
     <div className="header">

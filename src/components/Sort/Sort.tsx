@@ -1,13 +1,8 @@
 import React, { useEffect, useRef, MouseEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { selectSort, setSortType } from '../../redux/slices/filterSlice';
+import { selectSort, setSortType, SortObj } from '../../redux/slices/filterSlice';
 import { BlackUpArrowIcon } from '../../assets/icons';
-
-type SortObj = {
-  name: String;
-  sortProperty: String;
-};
 
 export const sortList: SortObj[] = [
   { name: 'популярности', sortProperty: 'rating' },
@@ -15,9 +10,14 @@ export const sortList: SortObj[] = [
   { name: 'алфавиту', sortProperty: 'title' },
 ];
 
-function Sort() {
+interface SortProps {
+  value: SortObj;
+  onClickSort: (sort: SortObj) => void;
+}
+
+const Sort: React.FC<SortProps> = ({ value, onClickSort }) => {
   const dispatch = useDispatch();
-  const sortType: any = useSelector(selectSort);
+  const sortType = useSelector(selectSort);
   const sortRef = useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = React.useState(false);
@@ -68,5 +68,5 @@ function Sort() {
       </div>
     </div>
   );
-}
+};
 export default Sort;

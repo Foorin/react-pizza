@@ -2,19 +2,21 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { OrangePlusIcon } from '../../assets/icons';
-import { addOnePizzas } from '../../redux/slices/cartSlice';
+import { addOnePizza, CartPizza } from '../../redux/slices/cartSlice';
 import { selectCartPizzaById } from '../../redux/slices/cartSlice';
+import { Pizza, selectPizza } from '../../redux/slices/pizzaSlice';
+import { Link } from 'react-router-dom';
 
-type PizzaBlockProps = {
-  id: number;
-  title: string;
-  price: number;
-  imageURL: string;
-  sizes: number[];
-  types: number[];
-};
+// type PizzaBlockProps = {
+//   id: string;
+//   title: string;
+//   price: number;
+//   imageURL: string;
+//   sizes: number[];
+//   types: number[];
+// };
 
-const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageURL, sizes, types }) => {
+const PizzaBlock: React.FC<Pizza> = ({ id, title, price, imageURL, sizes, types }) => {
   const dispatch = useDispatch();
 
   const [activeType, setActiveType] = React.useState(0);
@@ -22,25 +24,28 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageURL, siz
 
   const [activeSize, setActiveSize] = React.useState(0);
 
-  const cartPizza: any = useSelector(selectCartPizzaById(id));
+  const cartPizza = useSelector(selectCartPizzaById(id));
   const addedCountPizza = cartPizza ? cartPizza.count : 0;
 
   const onClickAddPizza = () => {
-    const pizza = {
+    const pizza: CartPizza = {
       id,
       title,
       price,
       imageURL,
       type: typePizza[activeType],
       size: sizes[activeSize],
+      count: 0,
     };
-    dispatch(addOnePizzas(pizza));
+    dispatch(addOnePizza(pizza));
   };
 
   return (
     <div className="pizza-block">
-      <img className="pizza-block__image" src={imageURL} alt="Pizza" />
-      <h4 className="pizza-block__title">{title}</h4>
+      <Link key={id} to={`/pizza/${id}`}>
+        <img className="pizza-block__image" src={imageURL} alt="Pizza" />
+        <h4 className="pizza-block__title">{title}</h4>
+      </Link>
       <div className="pizza-block__selector">
         <ul>
           {types.map((type) => (
