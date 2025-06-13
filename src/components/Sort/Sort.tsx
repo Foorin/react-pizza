@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, MouseEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useRef, MouseEvent, memo } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { selectSort, setSortType, SortObj } from '../../redux/slices/filterSlice';
+import { setSortType, SortObj } from '../../redux/slices/filterSlice';
 import { BlackUpArrowIcon } from '../../assets/icons';
 
 export const sortList: SortObj[] = [
@@ -12,12 +12,10 @@ export const sortList: SortObj[] = [
 
 interface SortProps {
   value: SortObj;
-  onClickSort: (sort: SortObj) => void;
 }
 
-const Sort: React.FC<SortProps> = ({ value, onClickSort }) => {
+const Sort: React.FC<SortProps> = memo(({ value }) => {
   const dispatch = useDispatch();
-  const sortType = useSelector(selectSort);
   const sortRef = useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = React.useState(false);
@@ -47,7 +45,7 @@ const Sort: React.FC<SortProps> = ({ value, onClickSort }) => {
           onClick={() => {
             setOpen(!open);
           }}>
-          {sortType.name}
+          {value.name}
         </span>
       </div>
       <div>
@@ -58,7 +56,7 @@ const Sort: React.FC<SortProps> = ({ value, onClickSort }) => {
                 <li
                   key={index}
                   onClick={() => onClickSelectedItem(sortBy)}
-                  className={sortType.sortProperty === sortBy.sortProperty ? 'active' : ''}>
+                  className={value.sortProperty === sortBy.sortProperty ? 'active' : ''}>
                   {sortBy.name}
                 </li>
               ))}
@@ -68,5 +66,5 @@ const Sort: React.FC<SortProps> = ({ value, onClickSort }) => {
       </div>
     </div>
   );
-};
+});
 export default Sort;

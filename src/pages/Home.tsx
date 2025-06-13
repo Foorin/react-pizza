@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import qs from 'qs';
@@ -29,9 +29,10 @@ const Home: React.FC = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const onChangeFilter = (id: number) => {
+  const onChangeFilter = useCallback((id: number) => {
     dispatch(setFilterId(id));
-  };
+  }, []);
+
   const onChangePage = (pageNumber: number) => {
     dispatch(setCurrentPage(pageNumber));
   };
@@ -86,28 +87,25 @@ const Home: React.FC = () => {
   }, [filterId, sortType.sortProperty, searchValue, currentPage]);
 
   const skeletons = [...new Array(6)].map((_, index) => <PizzaSkeleton key={index} />);
-
   return (
     <>
       <div className="container">
         <div className="content__top">
           <Categories value={filterId} onClickCategory={onChangeFilter} />
-          <Sort value={sortType} onClickSort={(sort) => dispatch(setSortType(sort))} />
+          <Sort value={sortType} />
         </div>
         <h2 className="content__title">Все пиццы</h2>
         {status === 'error' ? (
           <div className="content__error-info">
             <h2>Произошла ошибка</h2>
-            <p>К сожалению, не удалось получить пиццы. Попробуйте позже</p>
+            <p>К сожалению, таких пицц у нас нет</p>
           </div>
         ) : (
           <div className="content__items">
             {status === 'loading'
               ? skeletons
               : pizzas.map((pizza) => {
-                  return (
-                      <PizzaBlock {...pizza} />
-                  );
+                  return <PizzaBlock key={pizza.id} {...pizza} />;
                 })}
           </div>
         )}

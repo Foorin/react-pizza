@@ -59,25 +59,25 @@ const CartPizzaBlock: React.FC<CartProps> = ({ id, title, price, count, imageURL
         </p>
       </div>
       <div className="cart__item-count">
-        <div
+        <button
           className="button button--outline button--circle cart__item-count-minus"
           onClick={onClickRemovePizza}>
           <OrangeMinusIcon />
-        </div>
+        </button>
         <b>{count}</b>
-        <div
+        <button
           className="button button--outline button--circle cart__item-count-plus"
           onClick={onClickAddPizza}>
           <OrangePlusIcon />
-        </div>
+        </button>
       </div>
       <div className="cart__item-price">
         <b>{price * count} ₽</b>
       </div>
       <div className="cart__item-remove">
-        <div className="button button--outline button--circle" onClick={onClickDelete}>
+        <button className="button button--outline button--circle" onClick={onClickDelete}>
           <GreyDeleteIcon />
-        </div>
+        </button>
       </div>
     </div>
   );
