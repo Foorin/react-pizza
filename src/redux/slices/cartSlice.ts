@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { getPizzasFromLS } from '../../utils/getPizzasFromLS';
+import { calcTotalPrice } from '../../utils/caclTotalPrice';
+import { calcTotalCount } from '../../utils/caclTotalCount';
 
 export type CartPizza = {
   id: string;
@@ -23,10 +26,12 @@ interface CartSliceState {
   pizzas: CartPizza[];
 }
 
+const cartPizzas = getPizzasFromLS();
+
 const initialState: CartSliceState = {
-  totalPrice: 0,
-  totalCount: 0,
-  pizzas: [],
+  totalPrice: cartPizzas.totalPrice,
+  totalCount: cartPizzas.totalCount,
+  pizzas: cartPizzas.jsonPizzas,
 };
 
 const cartSlice = createSlice({
@@ -48,13 +53,8 @@ const cartSlice = createSlice({
           count: 1,
         });
       }
-      state.totalPrice = state.pizzas.reduce((sum, pizza) => {
-        return sum + pizza.price * pizza.count;
-      }, 0);
-
-      state.totalCount = state.pizzas.reduce((count, pizza) => {
-        return count + pizza.count;
-      }, 0);
+      state.totalPrice = calcTotalPrice(state.pizzas);
+      state.totalCount = calcTotalCount(state.pizzas);
     },
 
     removeOnePizza(state, action: PayloadAction<MatchPizza>) {
@@ -80,13 +80,8 @@ const cartSlice = createSlice({
         }
       }
 
-      state.totalPrice = state.pizzas.reduce((sum, pizza) => {
-        return sum + pizza.price * pizza.count;
-      }, 0);
-
-      state.totalCount = state.pizzas.reduce((count, pizza) => {
-        return count + pizza.count;
-      }, 0);
+      state.totalPrice = calcTotalPrice(state.pizzas);
+      state.totalCount = calcTotalCount(state.pizzas);
     },
 
     deletePizzas(state, action: PayloadAction<MatchPizza>) {
@@ -98,13 +93,8 @@ const cartSlice = createSlice({
         state.pizzas.splice(pizzaIndex, 1);
       }
 
-      state.totalPrice = state.pizzas.reduce((sum, pizza) => {
-        return sum + pizza.price * pizza.count;
-      }, 0);
-
-      state.totalCount = state.pizzas.reduce((count, pizza) => {
-        return count + pizza.count;
-      }, 0);
+      state.totalPrice = calcTotalPrice(state.pizzas);
+      state.totalCount = calcTotalCount(state.pizzas);
     },
 
     clearPizzas(state) {
